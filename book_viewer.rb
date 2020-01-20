@@ -1,5 +1,5 @@
 require "sinatra"
-require "sinatra/reloader"
+require "sinatra/reloader" if development?
 require "tilt/erubis"
 
 before do
@@ -38,10 +38,8 @@ end
 
 get "/search" do
   @results = []
-
-  return @results if params[:query].nil?
   
-  search_chapters
+  search_chapters unless params[:query].nil?
 
   erb :search
 end
